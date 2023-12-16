@@ -1,6 +1,6 @@
 # employee-management-system
 
-1. **Employee Information Management:**
+1. **Employee Information Management:** (Akash)
    - Personal Details
    - Contact Information
    - Emergency Contacts
@@ -19,13 +19,13 @@
    - Training and Development
    - Employee Self-Service (ESS)
 
-4. **Health and Safety:**
+4. **Health and Safety:** (Akash)
    - Incident Reporting
    - Health Records
    - Safety Training
    - Emergency Contacts
 
-5. **Employee Relations and Communication:**
+5. **Employee Relations and Communication:** (Sreeraghavan)
    - Employee Relations
    - Employee Communication
    - Employee Exit Management
@@ -38,6 +38,6 @@
 7. **Legal and Compliance:**
    - Legal and Compliance
 
-8. **Succession Planning and Analytics:**
+8. **Succession Planning and Analytics:** (Sreeraghavan)
    - Succession Planning
    - Reports and Analytics
