@@ -41,3 +41,6 @@
 8. **Succession Planning and Analytics:** (Sreeraghavan)
    - Succession Planning
    - Reports and Analytics
+
+
+The Employee Data class has been made and using the createFromUserinputandStore() function, an object can be created and stored in the db

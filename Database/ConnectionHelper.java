@@ -1,5 +1,6 @@
 package Database;
 
+import Employee.EmployeeData;
 import java.sql.*;
 import java.util.*;
 
@@ -185,5 +186,73 @@ public class ConnectionHelper {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void resetAllTables(){
+        try {
+            deleteEmployeeTable();
+            createEmployeeTable();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertRow(String query) {
+        Connection connection;
+        Statement statement;
+        try {
+            connection = ConnectionHelper.getConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            
+            e.printStackTrace();
+        }
+    }
+
+    public static void selectQuery(String newQuery) {
+        Connection connection;
+        Statement statement;
+        try {
+            connection = ConnectionHelper.getConnection();
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(newQuery);
+            ResultSetMetaData metaData = resultSet.getMetaData();
+
+            while (resultSet.next()) {
+                for (int i = 1; i <= 9; i++) {
+                    System.out.println(metaData.getColumnName(i) + ": " + resultSet.getString(i));
+                }
+                System.out.println();
+            }
+            
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createRelationsTable() {
+        try {
+            Statement stmt = getConnection().createStatement();
+            String sql = "CREATE TABLE Relations " +
+                         "(id INTEGER not NULL, " +
+                         " communicationChannels VARCHAR(255), " + 
+                         " conflictResolutionMethods VARCHAR(255), " + 
+                         " employeeFeedback VARCHAR(255), " + 
+                         " PRIMARY KEY ( id ))"; 
+            stmt.executeUpdate(sql);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void createEmployeeFromUserInputandStore(){
+        EmployeeData employee = EmployeeData.createFromUserInput();
+        String query = employee.getInsertQuery();
+        ConnectionHelper.insertRow(query);
     }
 }
