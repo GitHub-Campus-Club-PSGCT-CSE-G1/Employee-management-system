@@ -18,8 +18,14 @@ public class ConnectionHelper {
     public static void printAllDatabases() {
         try (Connection connection = getConnection()) {
             DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet resultSet = metaData.getCatalogs();
+            ResultSet resultSet = metaData.getCatalogs();            
 
+            // Retrieve database information
+            String dbName = metaData.getDatabaseProductName();
+            String dbVersion = metaData.getDatabaseProductVersion();
+            System.out.println("Connected to: " + dbName);
+            System.out.println("Database version: " + dbVersion);
+            System.out.println();
             while (resultSet.next()) {
                 String databaseName = resultSet.getString("TABLE_CAT");
                 System.out.println(databaseName);
