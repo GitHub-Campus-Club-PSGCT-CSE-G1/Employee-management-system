@@ -43,31 +43,4 @@ public class HealthandSafety {
         }
     }
 
-    public class SafetyTraining {
-        public void viewSafetyTraining() {
-            System.out.println("Safety training viewed");
-        }
-
-        public void editSafetyTraining() {
-            System.out.println("Safety training edited");
-        }
-
-        public void deleteSafetyTraining() {
-            System.out.println("Safety training deleted");
-        }
-    }
-
-    public class EmergencyContacts {
-        public void viewEmergencyContacts() {
-            System.out.println("Emergency contacts viewed");
-        }
-
-        public void editEmergencyContacts() {
-            System.out.println("Emergency contacts edited");
-        }
-
-        public void deleteEmergencyContacts() {
-            System.out.println("Emergency contacts deleted");
-        }
-    }
 }
