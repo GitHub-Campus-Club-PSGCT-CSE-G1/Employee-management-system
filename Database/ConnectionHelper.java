@@ -3,6 +3,7 @@ package Database;
 import Employee.EmployeeData;
 import java.sql.*;
 import java.util.*;
+import java.util.Date;
 
 public class ConnectionHelper {
 
@@ -41,26 +42,26 @@ public class ConnectionHelper {
         return resultSet.next();
     }
 
-    public static void createEmployeeTable()throws SQLException{
+    public static void createEmployeeTable() throws SQLException {
         String createTableSQL = "CREATE TABLE Employee ("
-            + "name VARCHAR(255),"
-            + "age INT,"
-            + "salary DOUBLE,"
-            + "designation VARCHAR(255),"
-            + "department VARCHAR(255),"
-            + "reportingManager VARCHAR(255),"
-            + "location VARCHAR(255),"
-            + "employeeType VARCHAR(255),"
-            + "employeeId VARCHAR(255),"
-            + "employeeStatus VARCHAR(255),"
-            + "employeeEmail VARCHAR(255),"
-            + "employeePhone VARCHAR(255),"
-            + "employeeAddress VARCHAR(255),"
-            + "employeeBankAccount VARCHAR(255),"
-            + "team VARCHAR(255))";
+                + "name VARCHAR(255),"
+                + "age INT,"
+                + "salary DOUBLE,"
+                + "designation VARCHAR(255),"
+                + "department VARCHAR(255),"
+                + "reportingManager VARCHAR(255),"
+                + "location VARCHAR(255),"
+                + "employeeType VARCHAR(255),"
+                + "employeeId VARCHAR(255),"
+                + "employeeStatus VARCHAR(255),"
+                + "employeeEmail VARCHAR(255),"
+                + "employeePhone VARCHAR(255),"
+                + "employeeAddress VARCHAR(255),"
+                + "employeeBankAccount VARCHAR(255),"
+                + "team VARCHAR(255))";
 
         try (Connection connection = getConnection();
-             Statement statement = connection.createStatement()) {
+                Statement statement = connection.createStatement()) {
             // Create the table
             statement.executeUpdate(createTableSQL);
             System.out.println("Employee table created successfully!");
@@ -69,11 +70,11 @@ public class ConnectionHelper {
         }
     }
 
-    public static void deleteEmployeeTable() throws SQLException{
+    public static void deleteEmployeeTable() throws SQLException {
         String deleteTableSQL = "DROP TABLE Employee";
 
         try (Connection connection = getConnection();
-             Statement statement = connection.createStatement()) {
+                Statement statement = connection.createStatement()) {
             // Delete the table
             statement.executeUpdate(deleteTableSQL);
             System.out.println("Employee table deleted successfully!");
@@ -81,6 +82,7 @@ public class ConnectionHelper {
             e.printStackTrace();
         }
     }
+
     public static String generateInsertQuery(String tableName, Map<String, Object> columnValues) {
         if (tableName == null || tableName.isEmpty() || columnValues == null || columnValues.isEmpty()) {
             throw new IllegalArgumentException("Table name or column values cannot be null or empty.");
@@ -109,7 +111,7 @@ public class ConnectionHelper {
     public static void printAllDatabases() {
         try (Connection connection = getConnection()) {
             DatabaseMetaData metaData = connection.getMetaData();
-            ResultSet resultSet = metaData.getCatalogs();            
+            ResultSet resultSet = metaData.getCatalogs();
 
             // Retrieve database information
             String dbName = metaData.getDatabaseProductName();
@@ -188,8 +190,88 @@ public class ConnectionHelper {
         }
     }
 
+    public static void createHealthandSafetyTable() {
+        try (Connection connection = getConnection()) {
+            String query = "CREATE TABLE HealthandSafety ("
+                    + "subject VARCHAR(255),"
+                    + "issue VARCHAR(255),"
+                    + "department VARCHAR(255),"
+                    + "type VARCHAR(255),"
+                    + "creationtimeanddate TIMESTAMP)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public static void resetAllTables(){
+    public static void getHealthandSafetyData(int empid) {
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM health_data WHERE employee_id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, empid);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                int employeeId = resultSet.getInt("employee_id");
+                Date dateOfBirth = resultSet.getDate("date_of_birth");
+                String gender = resultSet.getString("gender");
+                String bloodPressure = resultSet.getString("blood_pressure");
+                float cholesterolLevel = resultSet.getFloat("cholesterol_level");
+                float bloodSugarLevel = resultSet.getFloat("blood_sugar_level");
+                float weight = resultSet.getFloat("weight");
+                float height = resultSet.getFloat("height");
+
+                System.out.println("ID: " + id);
+                System.out.println("Employee ID: " + employeeId);
+                System.out.println("Date of Birth: " + dateOfBirth);
+                System.out.println("Gender: " + gender);
+                System.out.println("Blood Pressure: " + bloodPressure);
+                System.out.println("Cholesterol Level: " + cholesterolLevel);
+                System.out.println("Blood Sugar Level: " + bloodSugarLevel);
+                System.out.println("Weight: " + weight);
+                System.out.println("Height: " + height);
+                System.out.println();
+            }
+
+            resultSet.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void insertHealthandSafetyData(int employeeId, String dateOfBirth, String gender, String bloodPressure, float cholesterolLevel, float bloodSugarLevel, float weight, float height) {
+        try (Connection connection = getConnection()) {
+            String query = "INSERT INTO health_data (employee_id, date_of_birth, gender, blood_pressure, cholesterol_level, blood_sugar_level, weight, height) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, employeeId);
+            statement.setString(2, dateOfBirth);
+            statement.setString(3, gender);
+            statement.setString(4, bloodPressure);
+            statement.setFloat(5, cholesterolLevel);
+            statement.setFloat(6, bloodSugarLevel);
+            statement.setFloat(7, weight);
+            statement.setFloat(8, height);
+
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteHealthandSafetyData(int id) {
+        try (Connection connection = getConnection()) {
+            String query = "DELETE FROM health_data WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void resetAllTables() {
         try {
             deleteEmployeeTable();
             createEmployeeTable();
@@ -206,7 +288,7 @@ public class ConnectionHelper {
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            
+
             e.printStackTrace();
         }
     }
@@ -226,7 +308,7 @@ public class ConnectionHelper {
                 }
                 System.out.println();
             }
-            
+
             resultSet.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -237,11 +319,11 @@ public class ConnectionHelper {
         try {
             Statement stmt = getConnection().createStatement();
             String sql = "CREATE TABLE Relations " +
-                         "(id INTEGER not NULL, " +
-                         " communicationChannels VARCHAR(255), " + 
-                         " conflictResolutionMethods VARCHAR(255), " + 
-                         " employeeFeedback VARCHAR(255), " + 
-                         " PRIMARY KEY ( id ))"; 
+                    "(id INTEGER not NULL, " +
+                    " communicationChannels VARCHAR(255), " +
+                    " conflictResolutionMethods VARCHAR(255), " +
+                    " employeeFeedback VARCHAR(255), " +
+                    " PRIMARY KEY ( id ))";
             stmt.executeUpdate(sql);
         } catch (SQLException se) {
             se.printStackTrace();
@@ -250,7 +332,7 @@ public class ConnectionHelper {
         }
     }
 
-    public static void createEmployeeFromUserInputandStore(){
+    public static void createEmployeeFromUserInputandStore() {
         EmployeeData employee = EmployeeData.createFromUserInput();
         String query = employee.getInsertQuery();
         ConnectionHelper.insertRow(query);

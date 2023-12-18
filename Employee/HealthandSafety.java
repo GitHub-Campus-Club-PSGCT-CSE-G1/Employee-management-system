@@ -30,16 +30,16 @@ public class HealthandSafety {
     }
 
     public class HealthRecords {
-        public void viewHealthRecords() {
-            System.out.println("Health records viewed");
+        public static void viewHealthRecords(int employee_id) {
+            ConnectionHelper.getHealthandSafetyData(employee_id);
         }
 
-        public void editHealthRecords() {
-            System.out.println("Health records edited");
+        public static void insertHealthRecords(int employeeId, String dateOfBirth, String gender, String bloodPressure, float cholesterolLevel, float bloodSugarLevel, float weight, float height) {
+            ConnectionHelper.insertHealthandSafetyData(employeeId, dateOfBirth, gender, bloodPressure,cholesterolLevel,bloodSugarLevel,weight,height);
         }
 
-        public void deleteHealthRecords() {
-            System.out.println("Health records deleted");
+        public static void deleteHealthRecords(int recordid) {
+            ConnectionHelper.deleteHealthandSafetyData(recordid);
         }
     }
 
