@@ -1,5 +1,7 @@
+import Employee.EmployeeData;
 import Database.ConnectionHelper;
 import java.util.Scanner;
+
 
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
@@ -13,8 +15,7 @@ public class Main {
             System.out.println("1. Reset all tables");
             System.out.println("2. Create employee from user input and store");
             System.out.println("3. Select query");
-            System.out.println("4. Insert Attendance and Leave data");
-            System.out.println("5. Exit");
+            System.out.println("4. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
 
@@ -30,9 +31,6 @@ public class Main {
                     ConnectionHelper.selectQuery(query);
                     break;
                 case 4:
-                    ConnectionHelper.createAttendanceAndLeaveFromUserInputAndStore();
-                    break;
-                case 5:
                     System.out.println("Exiting...");
                     break;
                 default:
@@ -40,8 +38,8 @@ public class Main {
             }
 
             System.out.println();
-        } while (choice != 5);
-
+        } while (choice != 4);
+        
         scanner.close();
     }
 }
