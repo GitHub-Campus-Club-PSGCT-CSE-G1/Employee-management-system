@@ -1,6 +1,8 @@
-import Employee.EmployeeData;
+import Employee.*;
+import Employee.HealthandSafety.HealthRecords;
 import Database.ConnectionHelper;
 import java.util.Scanner;
+
 public class Main {
     public static void main(String[] args) throws ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -18,7 +20,9 @@ public class Main {
             System.out.println("1. Reset all tables");
             System.out.println("2. Create employee from user input and store");
             System.out.println("3. Select query");
-            System.out.println("4. Exit");
+            System.out.println("4. See all Health Records");
+            System.out.println("5. View all Pending Application");
+            System.out.println("6. Exit");
             System.out.print("Enter your choice: ");
             choice = scanner.nextInt();
             
@@ -36,7 +40,14 @@ public class Main {
                     ConnectionHelper.selectQuery(query);
                     break;
                 case 4:
-                    System.out.println("Exiting...");
+                    System.out.print("Enter the employee ID: ");
+                    int employeeId = scanner.nextInt();
+                    HealthandSafety.HealthRecords.viewHealthRecords(employeeId);
+                    break;
+                case 5:
+                    RecruitmentandOnboarding.Recruitment.getAllUndecidedApplications();
+                    break;
+                case 6:
                     break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -44,7 +55,7 @@ public class Main {
             }
             
             System.out.println();
-        } while (choice != 4);
+        } while (choice != 6);
         
         scanner.close();
     }
