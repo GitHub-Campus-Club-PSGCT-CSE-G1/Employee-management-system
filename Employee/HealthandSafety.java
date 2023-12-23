@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class HealthandSafety {
     ConnectionHelper connectionHelper = new ConnectionHelper();
     public class IncidentReporting {
-        public void reportIncident() {
+        public static void reportIncident() {
             Scanner scanner = new Scanner(System.in);
             
             System.out.print("Enter subject: ");
@@ -17,15 +17,15 @@ public class HealthandSafety {
             System.out.print("Enter department: ");
             String department = scanner.nextLine();
             
-            connectionHelper.createincident(subject, issue, department, "HS");
+            ConnectionHelper.createincident(subject, issue, department, "HS");
         }
 
-        public void viewIncident() {
-            connectionHelper.getincidents("HS");
+        public static void viewIncident() {
+            ConnectionHelper.getincidents("HS");
         }
 
-        public void deleteIncident(String id) {
-            connectionHelper.deleteincident(id);
+        public static void deleteIncident(String id) {
+            ConnectionHelper.deleteincident(id);
         }
     }
 
