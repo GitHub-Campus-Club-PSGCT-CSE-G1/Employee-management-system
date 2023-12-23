@@ -272,6 +272,129 @@ public class ConnectionHelper {
         }
     }
     
+    public static void getundecidedapplications() {
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM applicantstable WHERE applicationdecision = 0";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String applicantName = resultSet.getString("applicant_name");
+                String jobTitle = resultSet.getString("job_title");
+                String department = resultSet.getString("department");
+                int experienceYears = resultSet.getInt("experience_years");
+                String qualification = resultSet.getString("qualification");
+                String linkToResume = resultSet.getString("linktoresume");
+                int onlineAssessmentScore = resultSet.getInt("onlineassessmentscore");
+                int roundOneScore = resultSet.getInt("roundonescore");
+                int roundTwoScore = resultSet.getInt("roundtwoscore");
+                int roundThreeScore = resultSet.getInt("roundthreescore");
+
+                System.out.println("ID: " + id);
+                System.out.println("Applicant Name: " + applicantName);
+                System.out.println("Job Title: " + jobTitle);
+                System.out.println("Department: " + department);
+                System.out.println("Experience Years: " + experienceYears);
+                System.out.println("Qualification: " + qualification);
+                System.out.println("Link to Resume: " + linkToResume);
+                System.out.println("Online Assessment Score: " + onlineAssessmentScore);
+                System.out.println("Round One Score: " + roundOneScore);
+                System.out.println("Round Two Score: " + roundTwoScore);
+                System.out.println("Round Three Score: " + roundThreeScore);
+                System.out.println();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getacceptedapplications() {
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM applicantstable WHERE applicationdecision = 1";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String applicantName = resultSet.getString("applicant_name");
+                String jobTitle = resultSet.getString("job_title");
+                String department = resultSet.getString("department");
+                int experienceYears = resultSet.getInt("experience_years");
+                String qualification = resultSet.getString("qualification");
+                String linkToResume = resultSet.getString("linktoresume");
+                int onlineAssessmentScore = resultSet.getInt("onlineassessmentscore");
+                int roundOneScore = resultSet.getInt("roundonescore");
+                int roundTwoScore = resultSet.getInt("roundtwoscore");
+                int roundThreeScore = resultSet.getInt("roundthreescore");
+
+                System.out.println("ID: " + id);
+                System.out.println("Applicant Name: " + applicantName);
+                System.out.println("Job Title: " + jobTitle);
+                System.out.println("Department: " + department);
+                System.out.println("Experience Years: " + experienceYears);
+                System.out.println("Qualification: " + qualification);
+                System.out.println("Link to Resume: " + linkToResume);
+                System.out.println("Online Assessment Score: " + onlineAssessmentScore);
+                System.out.println("Round One Score: " + roundOneScore);
+                System.out.println("Round Two Score: " + roundTwoScore);
+                System.out.println("Round Three Score: " + roundThreeScore);
+                System.out.println();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void getrejectedapplications() {
+        try (Connection connection = getConnection()) {
+            String query = "SELECT * FROM applicantstable WHERE applicationdecision = -1";
+            PreparedStatement statement = connection.prepareStatement(query);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id");
+                String applicantName = resultSet.getString("applicant_name");
+                String jobTitle = resultSet.getString("job_title");
+                String department = resultSet.getString("department");
+                int experienceYears = resultSet.getInt("experience_years");
+                String qualification = resultSet.getString("qualification");
+                String linkToResume = resultSet.getString("linktoresume");
+                int onlineAssessmentScore = resultSet.getInt("onlineassessmentscore");
+                int roundOneScore = resultSet.getInt("roundonescore");
+                int roundTwoScore = resultSet.getInt("roundtwoscore");
+                int roundThreeScore = resultSet.getInt("roundthreescore");
+
+                System.out.println("ID: " + id);
+                System.out.println("Applicant Name: " + applicantName);
+                System.out.println("Job Title: " + jobTitle);
+                System.out.println("Department: " + department);
+                System.out.println("Experience Years: " + experienceYears);
+                System.out.println("Qualification: " + qualification);
+                System.out.println("Link to Resume: " + linkToResume);
+                System.out.println("Online Assessment Score: " + onlineAssessmentScore);
+                System.out.println("Round One Score: " + roundOneScore);
+                System.out.println("Round Two Score: " + roundTwoScore);
+                System.out.println("Round Three Score: " + roundThreeScore);
+                System.out.println();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void markApplicationStatus(int applicationId, int statusBit) {
+        try (Connection connection = getConnection()) {
+            String query = "UPDATE applicantstable SET applicationdecision = ? WHERE id = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, statusBit);
+            statement.setInt(2, applicationId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void resetAllTables() {
         try {
             deleteEmployeeTable();
