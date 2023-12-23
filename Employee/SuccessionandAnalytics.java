@@ -1,80 +1,74 @@
 package Employee;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Scanner;
 
 public class SuccessionandAnalytics {
-    private Map<String, Integer> employeePerformance;
-    private Map<String, String> employeeSuccessionPlan;
-    private Map<String, String> employeeSkills;
+    private String employeePerformance;
+    private String employeeSuccessionPlan;
+    private String employeeSkills;
 
     public SuccessionandAnalytics() {
-        employeePerformance = new HashMap<>();
-        employeeSuccessionPlan = new HashMap<>();
-        employeeSkills = new HashMap<>();
+        // Default constructor
     }
 
-    // Method to set employee performance ratings
-    public void setEmployeePerformance(String employeeId, int performanceRating) {
-        employeePerformance.put(employeeId, performanceRating);
-        System.out.println("Updated performance rating for Employee ID " + employeeId + " to " + performanceRating);
+    public SuccessionandAnalytics(String employeePerformance, String employeeSuccessionPlan, String employeeSkills) {
+        this.employeePerformance = employeePerformance;
+        this.employeeSuccessionPlan = employeeSuccessionPlan;
+        this.employeeSkills = employeeSkills;
     }
 
-    // Method to set succession plans for employees
-    public void setEmployeeSuccessionPlan(String employeeId, String successorId) {
-        employeeSuccessionPlan.put(employeeId, successorId);
-        System.out.println("Succession plan set for Employee ID " + employeeId + ": Successor ID " + successorId);
+    public String getEmployeePerformance() {
+        return employeePerformance;
     }
 
-    // Method to set employee skills
-    public void setEmployeeSkills(String employeeId, String skills) {
-        employeeSkills.put(employeeId, skills);
-        System.out.println("Updated skills for Employee ID " + employeeId + ": " + skills);
+    public void setEmployeePerformance(String employeePerformance) {
+        this.employeePerformance = employeePerformance;
     }
 
-    // Method to display employee performance ratings
-    public void displayEmployeePerformance() {
-        System.out.println("Employee performance ratings:");
-        for (Map.Entry<String, Integer> entry : employeePerformance.entrySet()) {
-            System.out.println("Employee ID: " + entry.getKey() + ", Performance Rating: " + entry.getValue());
-        }
+    public String getEmployeeSuccessionPlan() {
+        return employeeSuccessionPlan;
     }
 
-    // Method to display succession plans
-    public void displayEmployeeSuccessionPlan() {
-        System.out.println("Employee succession plans:");
-        for (Map.Entry<String, String> entry : employeeSuccessionPlan.entrySet()) {
-            System.out.println("Employee ID: " + entry.getKey() + ", Successor ID: " + entry.getValue());
-        }
+    public void setEmployeeSuccessionPlan(String employeeSuccessionPlan) {
+        this.employeeSuccessionPlan = employeeSuccessionPlan;
     }
 
-    // Method to display employee skills
-    public void displayEmployeeSkills() {
-        System.out.println("Employee skills:");
-        for (Map.Entry<String, String> entry : employeeSkills.entrySet()) {
-            System.out.println("Employee ID: " + entry.getKey() + ", Skills: " + entry.getValue());
-        }
+    public String getEmployeeSkills() {
+        return employeeSkills;
     }
 
-    public static void main(String[] args) {
-        SuccessionandAnalytics succession = new SuccessionandAnalytics();
-
-        // Setting employee performance ratings
-        succession.setEmployeePerformance("EMP001", 8);
-        succession.setEmployeePerformance("EMP002", 7);
-
-        // Setting succession plans
-        succession.setEmployeeSuccessionPlan("EMP001", "EMP003");
-        succession.setEmployeeSuccessionPlan("EMP002", "EMP004");
-
-        // Setting employee skills
-        succession.setEmployeeSkills("EMP001", "Leadership, Communication");
-        succession.setEmployeeSkills("EMP002", "Problem-solving, Teamwork");
-
-        // Displaying information
-        succession.displayEmployeePerformance();
-        succession.displayEmployeeSuccessionPlan();
-        succession.displayEmployeeSkills();
+    public void setEmployeeSkills(String employeeSkills) {
+        this.employeeSkills = employeeSkills;
     }
+
+    public String getInsertQuery() {
+        StringBuilder query = new StringBuilder();
+        query.append("INSERT INTO tableName (employeePerformance, employeeSuccessionPlan, employeeSkills) VALUES (");
+        query.append("'").append(employeePerformance).append("', ");
+        query.append("'").append(employeeSuccessionPlan).append("', ");
+        query.append("'").append(employeeSkills).append("')");
+        return query.toString();
+    }
+    
+    public static SuccessionandAnalytics createSuccessionandAnalyticsFromUserInput() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter employee performance: ");
+        String employeePerformance = scanner.nextLine();
+
+        System.out.print("Enter employee succession plan: ");
+        String employeeSuccessionPlan = scanner.nextLine();
+
+        System.out.print("Enter employee skills: ");
+        String employeeSkills = scanner.nextLine();
+
+        SuccessionandAnalytics successionandAnalytics = new SuccessionandAnalytics(employeePerformance, employeeSuccessionPlan, employeeSkills);
+
+        scanner.close();
+
+        return successionandAnalytics;
+    }
+
 }
+
 

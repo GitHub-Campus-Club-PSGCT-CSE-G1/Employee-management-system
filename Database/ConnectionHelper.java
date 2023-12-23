@@ -1,6 +1,7 @@
 package Database;
 
 import Employee.EmployeeData;
+import Employee.SuccessionandAnalytics;
 import Employee.AttendanceandLeave;
 import java.sql.*;
 import java.util.*;
@@ -463,9 +464,15 @@ public class ConnectionHelper {
         String query = employee.getInsertQuery();
         ConnectionHelper.insertRow(query);
     }
+
     public static void createAttendanceAndLeaveFromUserInputAndStore() {
         AttendanceandLeave attendanceAndLeave = AttendanceandLeave.createFromUserInput();
         String query = attendanceAndLeave.getInsertQuery();
+        ConnectionHelper.insertRow(query);
+    }
+    public static void createSuccessionAndAnalyticsFromUserInputAndStore() {
+        SuccessionandAnalytics successionAndAnalytics = SuccessionandAnalytics.createSuccessionandAnalyticsFromUserInput();
+        String query = successionAndAnalytics.getInsertQuery();
         ConnectionHelper.insertRow(query);
     }
 
@@ -500,6 +507,43 @@ public class ConnectionHelper {
             e.printStackTrace();
         }
     }
+    
+    public void createSuccesssionAndAnalyticsTable() {
+        try {
+
+            // Create a statement object
+            Statement statement = getConnection().createStatement();
+
+            // Define the SQL query to create the table
+            String query = "CREATE TABLE IF NOT EXISTS SuccessionandAnalytics (" +
+                    "employeePerformance VARCHAR(255), " +
+                    "employeeSuccessionPlan VARCHAR(255), " +
+                    "employeeSkills VARCHAR(255)" +
+                    ")";
+
+            // Execute the query to create the table
+            statement.executeUpdate(query);
+
+            // Close the statement and connection
+            statement.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteSuccessionAndAnalyticsTable() throws SQLException {
+        String deleteTableSQL = "DROP TABLE SuccessionandAnalytics";
+
+        try (Connection connection = getConnection();
+                Statement statement = connection.createStatement()) {
+            // Delete the table
+            statement.executeUpdate(deleteTableSQL);
+            System.out.println("Attendance table deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     
 
 }

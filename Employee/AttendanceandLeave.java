@@ -1,6 +1,4 @@
 package Employee;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class AttendanceandLeave {
@@ -81,7 +79,6 @@ public class AttendanceandLeave {
         System.out.print("Enter leave balance: ");
         int leaveBalance = scanner.nextInt();
 
-        scanner.close();
 
         return new AttendanceandLeave(employeeId, date, isPresent, hoursWorked, leaveBalance);
     }
