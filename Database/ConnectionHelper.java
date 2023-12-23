@@ -1,6 +1,7 @@
 package Database;
 
 import Employee.EmployeeData;
+import Employee.AttendanceandLeave;
 import java.sql.*;
 import java.util.*;
 import java.util.Date;
@@ -275,6 +276,8 @@ public class ConnectionHelper {
         try {
             deleteEmployeeTable();
             createEmployeeTable();
+            deleteAttendanceTable();
+            createAttendanceAndLeaveTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -337,4 +340,43 @@ public class ConnectionHelper {
         String query = employee.getInsertQuery();
         ConnectionHelper.insertRow(query);
     }
+    public static void createAttendanceAndLeaveFromUserInputAndStore() {
+        AttendanceandLeave attendanceAndLeave = AttendanceandLeave.createFromUserInput();
+        String query = attendanceAndLeave.getInsertQuery();
+        ConnectionHelper.insertRow(query);
+    }
+
+    public static void createAttendanceAndLeaveTable() {
+        try {
+            Statement stmt = getConnection().createStatement();
+            String sql = "CREATE TABLE AttendanceAndLeave " +
+                    "(id INTEGER not NULL AUTO_INCREMENT, " +
+                    " employeeId INTEGER, " +
+                    " date DATE, " +
+                    " isPresent BOOLEAN, " +
+                    " hoursWorked INTEGER, " +
+                    " leaveBalance INTEGER, " +
+                    " PRIMARY KEY ( id ))";
+            stmt.executeUpdate(sql);
+        } catch (SQLException se) {
+            se.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public static void deleteAttendanceTable() throws SQLException {
+        String deleteTableSQL = "DROP TABLE AttendanceAndLeave";
+
+        try (Connection connection = getConnection();
+                Statement statement = connection.createStatement()) {
+            // Delete the table
+            statement.executeUpdate(deleteTableSQL);
+            System.out.println("Attendance table deleted successfully!");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+
 }

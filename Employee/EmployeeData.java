@@ -89,7 +89,7 @@ public class EmployeeData {
         System.out.print("Enter employee ID: ");
         String employeeId = scanner.nextLine();
 
-        scanner.close();
+        
         return new EmployeeData(name, age, salary, designation, department, reportingManager, location, employeeType, employeeId);
     }
     
