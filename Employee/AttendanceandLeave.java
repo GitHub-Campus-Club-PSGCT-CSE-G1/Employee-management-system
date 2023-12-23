@@ -1,15 +1,17 @@
 package Employee;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Scanner;
 
 public class AttendanceandLeave {
     private int employeeId;
-    private Date date;
+    private String date;
     private boolean isPresent;
     private int hoursWorked;
     private int leaveBalance;
 
     // Constructor
-    public AttendanceandLeave(int employeeId, Date date, boolean isPresent, int hoursWorked, int leaveBalance) {
+    public AttendanceandLeave(int employeeId, String date, boolean isPresent, int hoursWorked, int leaveBalance) {
         this.employeeId = employeeId;
         this.date = date;
         this.isPresent = isPresent;
@@ -26,11 +28,11 @@ public class AttendanceandLeave {
         this.employeeId = employeeId;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -59,5 +61,41 @@ public class AttendanceandLeave {
     }
 
     // Other methods specific to Attendance and Leave management can be added here
+
+    public static AttendanceandLeave createFromUserInput() {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Enter employee ID: ");
+        int employeeId = scanner.nextInt();
+
+        System.out.print("Enter date (in yyyy-MM-dd format): ");
+        String date = scanner.next();
+        
+
+        System.out.print("Is present? (true/false): ");
+        boolean isPresent = scanner.nextBoolean();
+
+        System.out.print("Enter hours worked: ");
+        int hoursWorked = scanner.nextInt();
+
+        System.out.print("Enter leave balance: ");
+        int leaveBalance = scanner.nextInt();
+
+        scanner.close();
+
+        return new AttendanceandLeave(employeeId, date, isPresent, hoursWorked, leaveBalance);
+    }
+
+    public String getInsertQuery() {
+        StringBuilder queryBuilder = new StringBuilder();
+        queryBuilder.append("INSERT INTO AttendanceAndLeave (employeeId, DATE, isPresent, hoursWorked, leaveBalance) VALUES (");
+        queryBuilder.append(employeeId).append(", ");
+        queryBuilder.append("'").append(date).append("', ");
+        queryBuilder.append(isPresent).append(", ");
+        queryBuilder.append(hoursWorked).append(", ");
+        queryBuilder.append(leaveBalance).append(")");
+
+        return queryBuilder.toString();
+    }
 }
 
