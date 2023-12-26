@@ -3,6 +3,7 @@ package Employee;
 import java.util.Scanner;
 
 public class SuccessionandAnalytics {
+    private String employeeID;
     private String employeePerformance;
     private String employeeSuccessionPlan;
     private String employeeSkills;
@@ -11,10 +12,11 @@ public class SuccessionandAnalytics {
         // Default constructor
     }
 
-    public SuccessionandAnalytics(String employeePerformance, String employeeSuccessionPlan, String employeeSkills) {
+    public SuccessionandAnalytics(String employeePerformance, String employeeSuccessionPlan, String employeeSkills, String employeeID) {
         this.employeePerformance = employeePerformance;
         this.employeeSuccessionPlan = employeeSuccessionPlan;
         this.employeeSkills = employeeSkills;
+        this.employeeID = employeeID;
     }
 
     public String getEmployeePerformance() {
@@ -43,7 +45,8 @@ public class SuccessionandAnalytics {
 
     public String getInsertQuery() {
         StringBuilder query = new StringBuilder();
-        query.append("INSERT INTO tableName (employeePerformance, employeeSuccessionPlan, employeeSkills) VALUES (");
+        query.append("INSERT INTO SuccessionandAnalytics (employeeID,employeePerformance, employeeSuccessionPlan, employeeSkills) VALUES (");
+        query.append("'").append(employeeID).append("', ");
         query.append("'").append(employeePerformance).append("', ");
         query.append("'").append(employeeSuccessionPlan).append("', ");
         query.append("'").append(employeeSkills).append("')");
@@ -52,6 +55,9 @@ public class SuccessionandAnalytics {
     
     public static SuccessionandAnalytics createSuccessionandAnalyticsFromUserInput() {
         Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Employee ID");
+        String employeeID = scanner.nextLine();
 
         System.out.print("Enter employee performance: ");
         String employeePerformance = scanner.nextLine();
@@ -62,9 +68,9 @@ public class SuccessionandAnalytics {
         System.out.print("Enter employee skills: ");
         String employeeSkills = scanner.nextLine();
 
-        SuccessionandAnalytics successionandAnalytics = new SuccessionandAnalytics(employeePerformance, employeeSuccessionPlan, employeeSkills);
 
-        scanner.close();
+        SuccessionandAnalytics successionandAnalytics = new SuccessionandAnalytics(employeePerformance, employeeSuccessionPlan, employeeSkills,employeeID);
+
 
         return successionandAnalytics;
     }

@@ -402,6 +402,8 @@ public class ConnectionHelper {
             createEmployeeTable();
             deleteAttendanceTable();
             createAttendanceAndLeaveTable();
+            deleteSuccessionAndAnalyticsTable();
+            createSuccesssionAndAnalyticsTable();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -430,7 +432,7 @@ public class ConnectionHelper {
             ResultSetMetaData metaData = resultSet.getMetaData();
 
             while (resultSet.next()) {
-                for (int i = 1; i <= 9; i++) {
+                for (int i = 1; i <= metaData.getColumnCount(); i++) {
                     System.out.println(metaData.getColumnName(i) + ": " + resultSet.getString(i));
                 }
                 System.out.println();
@@ -508,7 +510,7 @@ public class ConnectionHelper {
         }
     }
     
-    public void createSuccesssionAndAnalyticsTable() {
+    public static void createSuccesssionAndAnalyticsTable() {
         try {
 
             // Create a statement object
@@ -516,6 +518,7 @@ public class ConnectionHelper {
 
             // Define the SQL query to create the table
             String query = "CREATE TABLE IF NOT EXISTS SuccessionandAnalytics (" +
+                    "employeeID VARCHAR(255), " +
                     "employeePerformance VARCHAR(255), " +
                     "employeeSuccessionPlan VARCHAR(255), " +
                     "employeeSkills VARCHAR(255)" +
